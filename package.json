@@ -77,7 +77,7 @@
     "@types/chai": "4.3.5",
     "@types/mocha": "10.0.1",
     "@types/node": "18.15.13",
-    "body-parser": "1.20.2",
+    "body-parser": "1.20.3",
     "chai": "4.3.7",
     "codecov": "3.8.3",
     "commitizen": "4.3.0",
