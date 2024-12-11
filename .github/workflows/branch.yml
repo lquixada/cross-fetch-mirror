@@ -31,6 +31,8 @@ jobs:
     name: Check
     needs: [install]
     uses: ./.github/workflows/checks.yml
+    with:
+      ref: ${{ github.sha }}
 
   # The security job can't run on pull requests opened from forks because
   # Github doesn't pass down the SNYK_TOKEN environment variable.
