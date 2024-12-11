@@ -13,6 +13,8 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.sha }}
     - uses: actions/cache@v3
       with:
         path: ~/.npm # this is cache where npm installs from before going out to the network
