@@ -1,6 +1,13 @@
 name: v4.x checks
 
-on: [workflow_call]
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'The commit the workflow should check out'
+        required: true
+        default: ${{ github.sha }}
+        type: string
 
 jobs:
   test-node:
@@ -14,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        ref: ${{ github.sha }}
+        ref: ${{ inputs.ref }}
     - uses: actions/cache@v3
       with:
         path: ~/.npm # this is cache where npm installs from before going out to the network
@@ -31,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.ref }}
     - uses: actions/cache@v3
       with:
         path: ~/.npm # this is cache where npm installs from before going out to the network
@@ -47,6 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.ref }}
     - uses: actions/cache@v3
       with:
         path: ~/.npm # this is cache where npm installs from before going out to the network
@@ -59,6 +70,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.ref }}
     - uses: actions/cache@v3
       with:
         path: ~/.npm # this is cache where npm installs from before going out to the network
