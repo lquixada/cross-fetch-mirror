@@ -1,7 +1,7 @@
 /* Rollup creates the browser version of the polyfill and ponyfill. */
 import path from 'path'
 import copy from 'rollup-plugin-copy'
-import { minify } from 'rollup-plugin-esbuild-minify'
+import { minify } from 'rollup-plugin-esbuild'
 
 const input = path.join(__dirname, 'node_modules', 'whatwg-fetch', 'fetch.js')
 
