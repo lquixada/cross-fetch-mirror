@@ -25,7 +25,7 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     steps:
-    - uses: hmarr/debug-action@v2
+    - uses: hmarr/debug-action@v3
 
   checks:
     name: Check

@@ -31,7 +31,7 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     steps:
-    - uses: hmarr/debug-action@v2
+    - uses: hmarr/debug-action@v3
 
   checks:
     name: Check
@@ -61,7 +61,7 @@ jobs:
     needs: [checks, security]
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version-file: '.nvmrc'
         # Setup .npmrc file to publish to npm
