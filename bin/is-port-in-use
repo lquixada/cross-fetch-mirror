@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+const net = require('net')
+const args = process.argv.slice(2)
+const port = args[0] || 8000
+const server = net.createServer().listen(port)
+
+server.on('listening', () => {
+  server.close()
+  console.log('Port ' + port + ' is available.')
+  process.exit(0)
+})
+
+server.on('error', () => {
+  console.log('Port ' + port + ' is in use.')
+  process.exit(1)
+})
