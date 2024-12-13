@@ -3,11 +3,13 @@ all: test lint typecheck
 
 .PHONY: clean
 clean:
+	@echo ""
+	@echo "=> cleaning dependencies and builds..."
 	@rm -Rf node_modules dist
 
 .PHONY: commit
 commit:
-	npx cz
+	@npx cz
 
 .PHONY: publish
 publish:
@@ -29,7 +31,9 @@ server:
 # Builds
 
 node_modules: package.json
-	npm install && /usr/bin/touch node_modules
+	@echo ""
+	@echo "=> installing dependencies..."
+	@npm install && /usr/bin/touch node_modules
 
 dist: package.json rollup.config.js $(wildcard src/*.js) node_modules
 	@echo ""
@@ -47,11 +51,15 @@ test/fetch-api/api.spec.js: test/fetch-api/api.spec.ts
 
 .PHONY: commitlint
 commitlint: node_modules
-	npx commitlint --from origin/main --to HEAD --verbose
+	@echo ""
+	@echo "=> linting commits..."
+	@npx commitlint --from origin/main --to HEAD --verbose
 
 .PHONY: cov
 cov:
-	npx nyc report --reporter=text-lcov > .reports/coverage.lcov && npx codecov
+	@echo ""
+	@echo "=> checking code coverage..."
+	@npx nyc report --reporter=text-lcov > .reports/coverage.lcov && npx codecov
 
 .PHONY: lint
 lint:
