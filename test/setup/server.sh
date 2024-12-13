@@ -11,7 +11,7 @@ kill_server() {
 }
 
 is_server_ready() {
-  lsof -i :8000 > /dev/null
+  ./bin/is-port-in-use > /dev/null
 }
 
 wait_server() {
