@@ -52,38 +52,54 @@ test-fetch: test-fetch-browser test-fetch-whatwg test-fetch-node
 
 .PHONY: test-fetch-browser
 test-fetch-browser: build
-	./test/fetch-api/browser/run.sh
+	@echo ""
+	@echo "=> make $@"
+	@./test/fetch-api/browser/run.sh
 
 .PHONY: test-fetch-whatwg
 test-fetch-whatwg: build
-	./test/fetch-api/whatwg/run.sh
+	@echo ""
+	@echo "=> make $@"
+	@./test/fetch-api/whatwg/run.sh
 
 .PHONY: test-fetch-node
 test-fetch-node: build
-	./test/fetch-api/node/run.sh
+	@echo ""
+	@echo "=> make $@"
+	@./test/fetch-api/node/run.sh
 
 .PHONY: test-module
 test-module: test-module-web-cjs test-module-web-esm test-module-node-cjs test-module-node-esm test-module-react-native
 
 .PHONY: test-module-web-cjs
 test-module-web-cjs: build
-	./test/module-system/web.cjs/run.sh
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/web.cjs/run.sh
 
 .PHONY: test-module-web-esm
 test-module-web-esm: build
-	./test/module-system/web.esm/run.sh
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/web.esm/run.sh
 
 .PHONY: test-module-node-cjs
 test-module-node-cjs: build
-	./test/module-system/node.cjs/run.sh
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/node.cjs/run.sh
 
 .PHONY: test-module-node-esm
 test-module-node-esm: build
-	./test/module-system/node.esm/run.sh
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/node.esm/run.sh
 
 .PHONY: test-module-react-native
 test-module-react-native: build
-	./test/module-system/react-native/run.sh
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/react-native/run.sh
 
 .PHONY: typecheck
 typecheck:
