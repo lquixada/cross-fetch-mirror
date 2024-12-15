@@ -13,7 +13,7 @@ browser:
 	./bin/server --exec "npx open-cli http://localhost:8000/test/fetch-api/browser/"
 
 .PHONY: commit
-commit:
+commit: node_modules
 	npx cz
 
 .PHONY: commitlint
@@ -25,23 +25,23 @@ compile: node_modules test/fetch-api/api.spec.ts
 	npx tsc
 
 .PHONY: cov
-cov:
+cov: node_modules
 	npx nyc report --reporter=text-lcov > .reports/coverage.lcov && npx codecov
 
 .PHONY: lint
-lint:
+lint: node_modules
 	npx standard
 
 .PHONY: release
-release:
+release: node_modules
 	npx standard-version
 
 .PHONY: release-alpha
-release-alpha:
+release-alpha: node_modules
 	npx standard-version --prerelease alpha
 
 .PHONY: secure
-secure:
+secure: node_modules
 	npx snyk test
 
 .PHONY: test
