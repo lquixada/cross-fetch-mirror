@@ -3,7 +3,7 @@ all: test lint typecheck
 node_modules: package.json
 	npm install && /usr/bin/touch node_modules
 
-build:
+build: node_modules
 	npx rollup -c
 
 browser:
@@ -15,7 +15,7 @@ commit:
 commitlint: node_modules
 	npx commitlint --from origin/main --to HEAD --verbose
 
-compile: test/fetch-api/api.spec.ts
+compile: node_modules test/fetch-api/api.spec.ts
 	npx tsc
 
 cov:
