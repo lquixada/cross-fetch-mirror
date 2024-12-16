@@ -63,7 +63,7 @@ secure: node_modules
 	@npx snyk test
 
 .PHONY: typecheck
-typecheck:
+typecheck: node_modules
 	@echo ""
 	@echo "=> make $@"
 	@npx tsc --lib ES6 --noEmit index.d.ts ./test/fetch-api/api.spec.ts
