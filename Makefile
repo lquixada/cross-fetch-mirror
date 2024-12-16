@@ -2,10 +2,14 @@
 all: test lint typecheck
 
 node_modules: package.json
-	npm install && /usr/bin/touch node_modules
+	@echo ""
+	@echo "=> installing dependencies..."
+	@npm install && /usr/bin/touch node_modules
 
-dist: node_modules
-	npx rollup -c
+dist: package.json rollup.config.js $(wildcard src/*.js) node_modules
+	@echo ""
+	@echo "=> make $@"
+	@npx rollup -c
 
 .PHONY: browser
 browser:
@@ -17,19 +21,27 @@ commit: node_modules
 
 .PHONY: commitlint
 commitlint: node_modules
-	npx commitlint --from origin/main --to HEAD --verbose
+	@echo ""
+	@echo "=> linting commits..."
+	@npx commitlint --from origin/main --to HEAD --verbose
 
 .PHONY: compile
 compile: node_modules test/fetch-api/api.spec.ts
-	npx tsc
+	@echo ""
+	@echo "=> make $@"
+	@npx tsc
 
 .PHONY: cov
 cov: node_modules
-	npx nyc report --reporter=text-lcov > .reports/coverage.lcov && npx codecov
+	@echo ""
+	@echo "=> checking code coverage..."
+	@npx nyc report --reporter=text-lcov > .reports/coverage.lcov && npx codecov
 
 .PHONY: lint
 lint: node_modules
-	npx standard
+	@echo ""
+	@echo "=> make $@"
+	@npx standard
 
 .PHONY: release
 release: node_modules
@@ -41,7 +53,9 @@ release-alpha: node_modules
 
 .PHONY: secure
 secure: node_modules
-	npx snyk test
+	@echo ""
+	@echo "=> make $@"
+	@npx snyk test
 
 .PHONY: test
 test: compile test-fetch test-module
@@ -102,4 +116,6 @@ test-module-react-native: | dist
 
 .PHONY: typecheck
 typecheck:
-	npx tsc --lib ES6 --noEmit index.d.ts ./test/fetch-api/api.spec.ts
+	@echo ""
+	@echo "=> make $@"
+	@npx tsc --lib ES6 --noEmit index.d.ts ./test/fetch-api/api.spec.ts
