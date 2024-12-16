@@ -102,31 +102,31 @@ test-fetch-node: | dist test/fetch-api/api.spec.js
 	@./test/fetch-api/node/run.sh
 
 .PHONY: test-module-web-cjs
-test-module-web-cjs: | dist test/fetch-api/api.spec.js
+test-module-web-cjs: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/web.cjs/run.sh
 
 .PHONY: test-module-web-esm
-test-module-web-esm: | dist test/fetch-api/api.spec.js
+test-module-web-esm: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/web.esm/run.sh
 
 .PHONY: test-module-node-cjs
-test-module-node-cjs: | dist test/fetch-api/api.spec.js
+test-module-node-cjs: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/node.cjs/run.sh
 
 .PHONY: test-module-node-esm
-test-module-node-esm: | dist test/fetch-api/api.spec.js
+test-module-node-esm: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/node.esm/run.sh
 
 .PHONY: test-module-react-native
-test-module-react-native: | dist test/fetch-api/api.spec.js
+test-module-react-native: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/react-native/run.sh
