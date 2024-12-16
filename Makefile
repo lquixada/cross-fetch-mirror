@@ -3,19 +3,19 @@ all: test lint typecheck
 
 .PHONY: browser
 browser:
-	./bin/server --exec "npx open-cli http://localhost:8000/test/fetch-api/browser/"
+	@./bin/server --exec "npx open-cli http://localhost:8000/test/fetch-api/browser/"
 
 .PHONY: commit
 commit: node_modules
-	npx cz
+	@npx cz
 
 .PHONY: release
 release: node_modules
-	npx standard-version
+	@npx standard-version
 
 .PHONY: release-alpha
 release-alpha: node_modules
-	npx standard-version --prerelease alpha
+	@npx standard-version --prerelease alpha
 
 ##
 # Builds
@@ -32,7 +32,7 @@ dist: package.json rollup.config.js $(wildcard src/*.js) node_modules
 
 test/fetch-api/api.spec.js: node_modules test/fetch-api/api.spec.ts
 	@echo ""
-	@echo "=> make $@"
+	@echo "=> compiling Typescript files..."
 	@npx tsc
 
 ##
