@@ -4,8 +4,7 @@ all: test lint typecheck
 node_modules: package.json
 	npm install && /usr/bin/touch node_modules
 
-.PHONY: build
-build: node_modules
+dist: node_modules
 	npx rollup -c
 
 .PHONY: browser
@@ -51,19 +50,19 @@ test: compile test-fetch test-module
 test-fetch: test-fetch-browser test-fetch-whatwg test-fetch-node
 
 .PHONY: test-fetch-browser
-test-fetch-browser: build
+test-fetch-browser: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/fetch-api/browser/run.sh
 
 .PHONY: test-fetch-whatwg
-test-fetch-whatwg: build
+test-fetch-whatwg: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/fetch-api/whatwg/run.sh
 
 .PHONY: test-fetch-node
-test-fetch-node: build
+test-fetch-node: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/fetch-api/node/run.sh
@@ -72,31 +71,31 @@ test-fetch-node: build
 test-module: test-module-web-cjs test-module-web-esm test-module-node-cjs test-module-node-esm test-module-react-native
 
 .PHONY: test-module-web-cjs
-test-module-web-cjs: build
+test-module-web-cjs: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/web.cjs/run.sh
 
 .PHONY: test-module-web-esm
-test-module-web-esm: build
+test-module-web-esm: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/web.esm/run.sh
 
 .PHONY: test-module-node-cjs
-test-module-node-cjs: build
+test-module-node-cjs: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/node.cjs/run.sh
 
 .PHONY: test-module-node-esm
-test-module-node-esm: build
+test-module-node-esm: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/node.esm/run.sh
 
 .PHONY: test-module-react-native
-test-module-react-native: build
+test-module-react-native: | dist
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/react-native/run.sh
