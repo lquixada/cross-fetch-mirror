@@ -30,8 +30,7 @@ dist: package.json rollup.config.js $(wildcard src/*.js) node_modules
 	@echo "=> make $@"
 	@npx rollup -c
 
-.PHONY: compile
-compile: node_modules test/fetch-api/api.spec.ts
+test/fetch-api/api.spec.js: node_modules test/fetch-api/api.spec.ts
 	@echo ""
 	@echo "=> make $@"
 	@npx tsc
@@ -73,7 +72,7 @@ typecheck:
 # Test groups
 
 .PHONY: test
-test: compile test-fetch test-module
+test: test-fetch test-module
 
 .PHONY: test-fetch
 test-fetch: test-fetch-browser test-fetch-whatwg test-fetch-node
@@ -85,49 +84,49 @@ test-module: test-module-web-cjs test-module-web-esm test-module-node-cjs test-m
 # Test units
 
 .PHONY: test-fetch-browser
-test-fetch-browser: | dist
+test-fetch-browser: | dist test/fetch-api/api.spec.js
 	@echo ""
 	@echo "=> make $@"
 	@./test/fetch-api/browser/run.sh
 
 .PHONY: test-fetch-whatwg
-test-fetch-whatwg: | dist
+test-fetch-whatwg: | dist test/fetch-api/api.spec.js
 	@echo ""
 	@echo "=> make $@"
 	@./test/fetch-api/whatwg/run.sh
 
 .PHONY: test-fetch-node
-test-fetch-node: | dist
+test-fetch-node: | dist test/fetch-api/api.spec.js
 	@echo ""
 	@echo "=> make $@"
 	@./test/fetch-api/node/run.sh
 
 .PHONY: test-module-web-cjs
-test-module-web-cjs: | dist
+test-module-web-cjs: | dist test/fetch-api/api.spec.js
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/web.cjs/run.sh
 
 .PHONY: test-module-web-esm
-test-module-web-esm: | dist
+test-module-web-esm: | dist test/fetch-api/api.spec.js
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/web.esm/run.sh
 
 .PHONY: test-module-node-cjs
-test-module-node-cjs: | dist
+test-module-node-cjs: | dist test/fetch-api/api.spec.js
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/node.cjs/run.sh
 
 .PHONY: test-module-node-esm
-test-module-node-esm: | dist
+test-module-node-esm: | dist test/fetch-api/api.spec.js
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/node.esm/run.sh
 
 .PHONY: test-module-react-native
-test-module-react-native: | dist
+test-module-react-native: | dist test/fetch-api/api.spec.js
 	@echo ""
 	@echo "=> make $@"
 	@./test/module-system/react-native/run.sh
