@@ -1,69 +1,132 @@
+.PHONY: all
 all: test lint typecheck
 
-node_modules: package.json
-	npm install && /usr/bin/touch node_modules
-
-build: node_modules
-	npx rollup -c
-
+.PHONY: browser
 browser:
 	./bin/server --exec "npx open-cli http://localhost:8000/test/fetch-api/browser/"
 
-commit:
+.PHONY: commit
+commit: node_modules
 	npx cz
 
-commitlint: node_modules
-	npx commitlint --from origin/main --to HEAD --verbose
-
-compile: node_modules test/fetch-api/api.spec.ts
-	npx tsc
-
-cov:
-	npx nyc report --reporter=text-lcov > .reports/coverage.lcov && npx codecov
-
-lint:
-	npx standard
-
-release:
+.PHONY: release
+release: node_modules
 	npx standard-version
 
-release-alpha:
+.PHONY: release-alpha
+release-alpha: node_modules
 	npx standard-version --prerelease alpha
 
-secure:
-	npx snyk test
+##
+# Builds
 
-test: compile test-fetch test-module
+node_modules: package.json
+	@echo ""
+	@echo "=> installing dependencies..."
+	@npm install && /usr/bin/touch node_modules
 
+dist: package.json rollup.config.js $(wildcard src/*.js) node_modules
+	@echo ""
+	@echo "=> make $@"
+	@npx rollup -c
+
+test/fetch-api/api.spec.js: node_modules test/fetch-api/api.spec.ts
+	@echo ""
+	@echo "=> make $@"
+	@npx tsc
+
+##
+# Checks
+
+.PHONY: commitlint
+commitlint: node_modules
+	@echo ""
+	@echo "=> linting commits..."
+	@npx commitlint --from origin/main --to HEAD --verbose
+
+.PHONY: cov
+cov: node_modules
+	@echo ""
+	@echo "=> checking code coverage..."
+	@npx nyc report --reporter=text-lcov > .reports/coverage.lcov && npx codecov
+
+.PHONY: lint
+lint: node_modules
+	@echo ""
+	@echo "=> make $@"
+	@npx standard
+
+.PHONY: secure
+secure: node_modules
+	@echo ""
+	@echo "=> make $@"
+	@npx snyk test
+
+.PHONY: typecheck
+typecheck: node_modules
+	@echo ""
+	@echo "=> make $@"
+	@npx tsc --lib ES6 --noEmit index.d.ts ./test/fetch-api/api.spec.ts
+
+##
+# Test groups
+
+.PHONY: test
+test: test-fetch test-module
+
+.PHONY: test-fetch
 test-fetch: test-fetch-browser test-fetch-whatwg test-fetch-node
 
-test-fetch-browser: build
-	./test/fetch-api/browser/run.sh
-
-test-fetch-whatwg: build
-	./test/fetch-api/whatwg/run.sh
-
-test-fetch-node: build
-	./test/fetch-api/node/run.sh
-
+.PHONY: test-module
 test-module: test-module-web-cjs test-module-web-esm test-module-node-cjs test-module-node-esm test-module-react-native
 
-test-module-web-cjs: build
-	./test/module-system/web.cjs/run.sh
+##
+# Test units
 
-test-module-web-esm: build
-	./test/module-system/web.esm/run.sh
+.PHONY: test-fetch-browser
+test-fetch-browser: | dist test/fetch-api/api.spec.js
+	@echo ""
+	@echo "=> make $@"
+	@./test/fetch-api/browser/run.sh
 
-test-module-node-cjs: build
-	./test/module-system/node.cjs/run.sh
+.PHONY: test-fetch-whatwg
+test-fetch-whatwg: | dist test/fetch-api/api.spec.js
+	@echo ""
+	@echo "=> make $@"
+	@./test/fetch-api/whatwg/run.sh
 
-test-module-node-esm: build
-	./test/module-system/node.esm/run.sh
+.PHONY: test-fetch-node
+test-fetch-node: | dist test/fetch-api/api.spec.js
+	@echo ""
+	@echo "=> make $@"
+	@./test/fetch-api/node/run.sh
 
-test-module-react-native: build
-	./test/module-system/react-native/run.sh
+.PHONY: test-module-web-cjs
+test-module-web-cjs: | dist
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/web.cjs/run.sh
 
-typecheck:
-	npx tsc --lib ES6 --noEmit index.d.ts ./test/fetch-api/api.spec.ts
+.PHONY: test-module-web-esm
+test-module-web-esm: | dist
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/web.esm/run.sh
 
-.PHONY: all build deploy lint test test-fetch test-fetch-browser test-fetch-whatwg test-fetch-node test-module test-module-web-cjs test-module-web-esm test-module-node-cjs test-module-node-esm test-module-react-native typecheck
+.PHONY: test-module-node-cjs
+test-module-node-cjs: | dist
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/node.cjs/run.sh
+
+.PHONY: test-module-node-esm
+test-module-node-esm: | dist
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/node.esm/run.sh
+
+.PHONY: test-module-react-native
+test-module-react-native: | dist
+	@echo ""
+	@echo "=> make $@"
+	@./test/module-system/react-native/run.sh
