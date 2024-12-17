@@ -35,15 +35,33 @@ jobs:
       id: cacheModules
       uses: actions/cache@v4
       with:
-        path: ~/.npm # this is cache where npm installs from before going out to the network
+        path: ~/.npm # this is the cache where npm installs from before going out to the network
         key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
     - name: Install dependencies
       if: steps.cacheModules.outputs.cache-hit != 'true'
       run: npm install
 
+  build:
+    name: Build
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Cache dist files
+      id: cacheDist
+      uses: actions/cache@v4
+      with:
+        path: ./dist
+        key: ${{ runner.os }}-node-${{ hashFiles('package.json', 'rollup.config.js', 'src/*.js') }}
+    - name: Install dependencies
+      if: steps.cacheDist.outputs.cache-hit != 'true'
+      run: make dist
+
   checks:
     name: Checks
-    needs: [install]
+    needs: [build]
     uses: ./.github/workflows/checks.yml
     with:
       ref: ${{ github.event.pull_request.head.sha }}
