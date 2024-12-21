@@ -5,7 +5,7 @@ all: test lint typecheck
 clean:
 	@echo ""
 	@echo "=> cleaning dependencies and builds..."
-	@rm -Rf node_modules dist
+	@git clean -dfx
 
 .PHONY: commit
 commit:
