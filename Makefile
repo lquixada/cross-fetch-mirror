@@ -35,10 +35,18 @@ node_modules: package.json
 	@echo "=> installing dependencies..."
 	@npm install && /usr/bin/touch node_modules
 
+# alias for "node_modules" target
+.PHONY: install
+install: node_modules
+
 dist: package.json rollup.config.js $(wildcard src/*.js) node_modules
 	@echo ""
 	@echo "=> make $@"
 	@npx rollup -c --bundleConfigAsCjs && /usr/bin/touch dist
+
+# alias for "dist" target
+.PHONY: build
+build: dist
 
 test/fetch-api/api.spec.js: test/fetch-api/api.spec.ts
 	@echo ""
