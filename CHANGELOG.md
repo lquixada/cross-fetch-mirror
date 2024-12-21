@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/lquixada/cross-fetch/compare/v3.1.8...v3.2.0) (2024-12-21)
+
+
+### Features
+
+* updated node-fetch to 2.7.0 ([#191](https://github.com/lquixada/cross-fetch/issues/191)) ([ebf44c3](https://github.com/lquixada/cross-fetch/commit/ebf44c303c2dbda25f0f1f7e5af814ee038c280c))
+
+
+### Bug Fixes
+
+* updated whatwg-fetch to 3.6.20 ([#198](https://github.com/lquixada/cross-fetch/issues/198)) ([fbbecc8](https://github.com/lquixada/cross-fetch/commit/fbbecc86ec558e704682c822c53e9d48b0851141))
+
 ### [3.1.8](https://github.com/lquixada/cross-fetch/compare/v3.1.7...v3.1.8) (2023-07-02)
 
 
