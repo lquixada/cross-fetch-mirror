@@ -39,7 +39,7 @@ node_modules: package.json
 .PHONY: install
 install: node_modules
 
-dist: package.json rollup.config.js $(wildcard src/*.js) node_modules
+dist: rollup.config.js $(wildcard src/*.js) node_modules
 	@echo ""
 	@echo "=> make $@"
 	@npx rollup -c --bundleConfigAsCjs && /usr/bin/touch dist
