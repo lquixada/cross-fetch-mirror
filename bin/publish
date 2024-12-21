@@ -14,11 +14,10 @@ latest_major=$(echo $latest_version | cut -d. -f1)
 
 # If this has been triggered by a "vX.x-test" branch, we just want to test the release workflow (dry run it!)
 if [[ "$workflow_version" == *"-test"* ]]; then
-  npm publish --tag $workflow_track --dry-run && \
-  exit 0
+  npm publish --tag $workflow_track --dry-run && exit 0
 fi
 
-npm publish --tag $workflow_track
+npm publish --tag $workflow_track || exit 1
 
 if [[ "$workflow_major" == "$latest_major" ]]; then
   npm dist-tag add cross-fetch@$workflow_version latest
