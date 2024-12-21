@@ -8,7 +8,6 @@
   "react-native": "dist/react-native-ponyfill.js",
   "types": "index.d.ts",
   "scripts": {
-    "commit": "cz",
     "prepare": "husky install",
     "prepublishOnly": "rimraf dist && make dist"
   },
