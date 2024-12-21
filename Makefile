@@ -17,11 +17,11 @@ publish:
 
 .PHONY: version
 version:
-	npx standard-version
+	@npx standard-version
 
 .PHONY: version-alpha
 version-alpha:
-	npx standard-version --prerelease alpha
+	@npx standard-version --prerelease alpha
 
 .PHONY: server
 server:
