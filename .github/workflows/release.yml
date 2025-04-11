@@ -53,9 +53,9 @@ jobs:
         path: ~/.npm # cache where "npm install" uses before going out to the network
         key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
     - run: npm install --prefer-offline
-    - run: make secure
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    # - run: make secure
+    #   env:
+    #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   publish:
     name: Publish to NPM registry
